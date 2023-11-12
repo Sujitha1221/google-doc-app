@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// YourMainComponent.tsx
+import React, { useState } from 'react';
+import YourFormComponent from './components/YourFormComponent';
+import DocumentViewer from './components/DocumentViewer';
+import { extractFileId } from './components/YourHelperFunctions';
 
-function App() {
+const YourMainComponent: React.FC = () => {
+  const [fileId, setFileId] = useState<string | null>(null);
+
+  const handleFormSubmit = (driveLink: string) => {
+    const extractedFileId = extractFileId(driveLink);
+    setFileId(extractedFileId);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <YourFormComponent onSubmit={handleFormSubmit} />
+      {fileId && <DocumentViewer fileId={fileId} />}
     </div>
   );
-}
+};
 
-export default App;
+export default YourMainComponent;
